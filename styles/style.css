@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
-
 :root {
   --primaryTextColor: #232e35; /* Untuk title atau judul */
   --secondaryTextColor: #656d72; /* Untuk text biasa seperti paragraph contohnya */
@@ -56,9 +54,22 @@ li {
 
 a {
   text-decoration: none;
+  color: var(--secondaryTextColor);
 }
 
 /* End Preparation */
+
+/* Hero Animation */
+@keyframes slideUpHero {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 .main-container {
   width: 1200px;
@@ -133,6 +144,10 @@ nav ul {
   gap: 3rem;
 }
 
+nav li a:hover {
+  color: var(--primaryIconColor);
+}
+
 /* Logo */
 .nav .logo img {
   width: 50px;
@@ -148,8 +163,8 @@ nav ul li {
   align-items: center;
 }
 
-nav ul li a {
-  color: var(--primaryTextColor);
+nav ul li a:hover {
+  fill: var(--primaryIconColor);
 }
 
 /* Burger - Save for later on video */
@@ -172,7 +187,7 @@ nav ul li a {
 
 /* Hero Section */
 #hero {
-  height: 720px;
+  height: 780px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   /* We're not going to use automatic template columns, because we need to know when the columns is go below. So we can exchange the order of the element */
@@ -191,6 +206,11 @@ nav ul li a {
 
 .hero-right img {
   width: 90%;
+  max-width: 450px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 .hero-right {
@@ -198,10 +218,18 @@ nav ul li a {
   justify-content: center;
 }
 
+.hero-left {
+  animation: slideUpHero 0.8s ease-out;
+}
+
+.hero-right {
+  animation: slideUpHero 0.8s ease-out 0.2s both;
+}
+
 /* Services Section */
 #services {
   background-color: var(--secondaryBackgroundColor);
-  padding: var(--sectionPadding);
+  padding: 12rem 0;
 }
 
 .services .pre-title {
@@ -249,6 +277,17 @@ nav ul li a {
   fill: var(--primaryIconColor);
 }
 
+.service:hover {
+  transform: scale(1.04) translateY(-8px);
+  box-shadow:
+    0 12px 32px rgba(15, 23, 42, 0.18),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+  transition:
+    transform 0.25s cubic-bezier(0.4, 2, 0.3, 1),
+    box-shadow 0.25s;
+}
+
 /* Portfolios */
 #portfolios {
   padding: var(--sectionPadding);
@@ -267,7 +306,7 @@ nav ul li a {
 .portfolio img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .portfolio-info {
@@ -314,69 +353,145 @@ nav ul li a {
   color: var(--secondaryTextColor);
 }
 
-/* Skills and Education */
-#skills {
-  padding: var(--sectionPadding);
+/* Certificates */
+#certificates {
+  padding: 10rem 0;
   background: var(--secondaryBackgroundColor);
 }
 
-.skills-grid {
+.certificates {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+}
+
+.certificate-grid {
   display: grid;
-  /* grid-template-columns: 40% 60%; */
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+  align-items: stretch;
 }
 
-.education {
-  display: flex;
-  gap: 1rem;
+.certificate-card {
+  width: 100%;
+  background: var(--primaryBackgroundColor);
+  border: 1px solid var(--borderColor);
+  border-radius: 12px;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.education .line {
-  padding: 0 0.7rem;
+.certificate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-.education .line div {
-  width: 2px;
+.certificate-preview {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.certificate-preview iframe {
+  width: 100%;
   height: 100%;
-  background: var(--borderColor);
-  position: relative;
+  border: none;
+  display: block;
 }
 
-.education-info p {
-  margin: 0.6rem 0 1.4rem;
+.certificate-content {
+  padding: 1.5rem;
 }
 
-.education-years {
-  margin-bottom: 3rem;
+.certificate-content h4 {
+  margin: 0 0 0.6rem;
 }
 
-/* The dot on the line */
-.education .line div:before {
-  content: "";
-  width: 15px;
-  height: 15px;
-  background: var(--borderColor);
-  border-radius: 50%;
-  position: absolute;
-  left: -6px;
+.certificate-content p {
+  margin: 0 0 0.5rem;
 }
 
-/* Right side of Skills */
-.skills-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-top: 1.5rem;
+.certificate-content span {
+  display: block;
+  margin-bottom: 1.3rem;
+  font-size: 0.9rem;
 }
 
-.skills-right ul {
-  line-height: 2rem;
-  padding: 0 1rem;
+.certificate-button {
+  display: inline-block;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  background: var(--primaryIconColor);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 1000px) {
+  .certificate-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .certificates {
+    padding: 0 1rem;
+  }
+
+  .certificate-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hidden-certificate {
+  display: none;
+}
+
+.hidden-certificate.show {
+  display: block;
+}
+
+.certificate-toggle {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.certificate-toggle-button {
+  width: 100%;
+  padding: 0.75rem 1.3rem;
+  font-family: "Roboto", sans-serif;
+  background: var(--secondaryBackgroundColor);
+  border: 1px solid var(--borderColor);
+  border-radius: 3px;
+  resize: none;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 6px;
+  background: var(--primaryIconColor);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.certificate-toggle-button:hover {
+  background-color: var(--primaryIconColorHover);
+  transform: translateY(-2px);
 }
 
 /* Contact Section */
 #contact {
-  padding: var(--sectionPadding);
+  padding: 10rem 0;
 }
 
 .contact {
